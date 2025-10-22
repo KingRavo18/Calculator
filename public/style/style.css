@@ -7,7 +7,15 @@
     height: 40px;
     font-family: monospace;
     font-size: 200%;
+    font-weight: bold;
+    -webkit-text-stroke: 1px #949393;
 
-    &:hover{ color: rgb(165, 165, 165); }
-    &:active{ color: rgb(117, 117, 117); }
+    &:hover{ 
+        color: rgb(165, 165, 165); 
+        -webkit-text-stroke: 1px #8b8b8b;
+    }
+    &:active{ 
+        color: rgb(117, 117, 117); 
+        -webkit-text-stroke: 1px #5e5d5d;
+    }
 }

@@ -216,6 +216,18 @@
   .bg-\[\#C27C7C\] {
     background-color: #C27C7C;
   }
+  .px-\[10px\] {
+    padding-inline: 10px;
+  }
+  .text-right {
+    text-align: right;
+  }
+  .text-\[300\%\] {
+    font-size: 300%;
+  }
+  .text-\[\#4b5234\] {
+    color: #4b5234;
+  }
   .shadow-\[4px_4px_15px_\#6e6e6e\] {
     --tw-shadow: 4px 4px 15px var(--tw-shadow-color, #6e6e6e);
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
@@ -256,11 +268,15 @@
   height: 40px;
   font-family: monospace;
   font-size: 200%;
+  font-weight: bold;
+  -webkit-text-stroke: 1px #949393;
   &:hover {
     color: rgb(165, 165, 165);
+    -webkit-text-stroke: 1px #8b8b8b;
   }
   &:active {
     color: rgb(117, 117, 117);
+    -webkit-text-stroke: 1px #5e5d5d;
   }
 }
 @property --tw-shadow {
