@@ -1,75 +1,98 @@
-const equationDisplay = document.getElementById("equation-display") as HTMLInputElement;
-const equationCharacters: string[] = [];
-const tempArray: any[] = [];
-const condensedEquation: any[] = [];
-let finalNumber: number;
-let visibleEquation = "";
+interface calculatorReturnTypes {
+    getCalculatorValue: (value: string) => void;
+    calculate: () => void;
+    resetCalculator: () => void;
+}
 
-function getCalculatorValue(value: string): void{
-    equationCharacters.push(value);
-    if(value === "+" || value === "-" || value === "*" || value === "/" || value === "."){
-        if(equationCharacters.at(-2) === "+" || equationCharacters.at(-2) === "-" || equationCharacters.at(-2) === "*" || equationCharacters.at(-2) === "/" || equationCharacters.at(-2) === "."){
-            equationCharacters.pop();
+function ActivateCalculator(): calculatorReturnTypes{
+    const equationDisplay = document.getElementById("equation-display") as HTMLInputElement;
+    const equationCharacters: string[] = [];
+    const tempArray: string[] = [];
+    const condensedEquation: any[] = [];
+    let displayedEquation = "";
+
+    function getCalculatorValue(value: string){
+        equationCharacters.push(value);
+        if(value === "+" || value === "-" || value === "*" || value === "/" || value === "."){
+            if(equationCharacters.at(-2) === "+" || equationCharacters.at(-2) === "-" || equationCharacters.at(-2) === "*" || equationCharacters.at(-2) === "/" || equationCharacters.at(-2) === "."){
+                equationCharacters.pop();
+                return;
+            }
+        }
+        displayedEquation = equationCharacters.join("");
+        equationDisplay.value = displayedEquation; 
+    }
+
+    function calculate(){
+        createEquation();
+        if(condensedEquation.length < 3){
             return;
         }
+        let finalNumber = solveEquation();
+        if(finalNumber === Infinity){
+            return getError();
+        }
+        displayedEquation = (finalNumber).toString();
+        equationDisplay.value = displayedEquation; 
+        equationCharacters.length = 0;
+        equationCharacters.push(displayedEquation);
     }
-    visibleEquation = equationCharacters.join("");
-    equationDisplay.value = visibleEquation; 
-}
 
-function calculateValue(): void{
-    condensedEquation.length = 0;
-    for(let i = 0; i < equationCharacters.length; i++){
-        if(Number(equationCharacters[i]) || equationCharacters[i] === "."){
-            tempArray.push(equationCharacters[i]);
-            if(i === equationCharacters.length - 1){
+    function createEquation(): void{
+        condensedEquation.length = 0;
+        for(let i = 0; i < equationCharacters.length; i++){
+            const char = equationCharacters[i];
+            if(char === undefined){
+                continue;
+            }
+            if(Number(char) || char === "."){
+                tempArray.push(char);
+                if(i === equationCharacters.length - 1){
+                    condensedEquation.push(Number(tempArray.join("")));
+                    tempArray.length = 0;
+                }
+            }else{
                 condensedEquation.push(Number(tempArray.join("")));
                 tempArray.length = 0;
-            }
-        } else {
-            condensedEquation.push(Number(tempArray.join("")));
-            tempArray.length = 0;
-            condensedEquation.push(equationCharacters[i]);
-        }
-    }
-
-    for(let j = 0; j < condensedEquation.length; j++){
-        if(j === 0){
-            finalNumber = condensedEquation[j];
-        }else if(Number.isInteger(condensedEquation[j])){
-            if(condensedEquation[j - 1] === "+"){
-                finalNumber += condensedEquation[j];
-            }
-            if(condensedEquation[j - 1] === "*"){
-                finalNumber *= condensedEquation[j];
-            }
-            if(condensedEquation[j - 1] === "-"){
-                finalNumber -= condensedEquation[j];
-            }
-            if(condensedEquation[j - 1] === "/"){
-                finalNumber /= condensedEquation[j];
+                condensedEquation.push(char);
             }
         }
     }
-    if(finalNumber === Infinity){
-        return getError();
+
+    function solveEquation(): number{
+        let finalNumber = 0;
+        for(let j = 0; j < condensedEquation.length; j++){
+            if(j === 0){
+                finalNumber = condensedEquation[j];
+            }else if(Number.isInteger(condensedEquation[j])){
+                if(condensedEquation[j - 1] === "+") finalNumber += condensedEquation[j];
+                if(condensedEquation[j - 1] === "*") finalNumber *= condensedEquation[j];
+                if(condensedEquation[j - 1] === "-") finalNumber -= condensedEquation[j];
+                if(condensedEquation[j - 1] === "/") finalNumber /= condensedEquation[j];
+            }else{
+                continue;
+            }
+        }
+        return finalNumber;
     }
-    visibleEquation = (finalNumber).toString();
-    equationDisplay.value = visibleEquation; 
+
+    function resetCalculator(){
+        equationCharacters.length = 0;
+        condensedEquation.length = 0;
+        tempArray.length = 0;
+        displayedEquation = "";
+        equationDisplay.value = displayedEquation;
+    }
+
+    function getError(): void{
+        resetCalculator();
+        equationDisplay.value = "ERROR";
+    }
+
+    return {getCalculatorValue, resetCalculator, calculate}
 }
 
-function clearDisplay(): void{
-    visibleEquation = "";
-    equationCharacters.length = 0;
-    condensedEquation.length = 0;
-    tempArray.length = 0;
-    equationDisplay.value = visibleEquation;
-}
-
-function getError(): void{
-    clearDisplay();
-    equationDisplay.value = "ERROR";
-}
+const {getCalculatorValue, resetCalculator, calculate} = ActivateCalculator();
 
 (document.getElementById("btn-1") as HTMLElement).onclick = () => getCalculatorValue("1");
 (document.getElementById("btn-2") as HTMLElement).onclick = () => getCalculatorValue("2");
@@ -88,5 +111,5 @@ function getError(): void{
 (document.getElementById("btn-*") as HTMLElement).onclick = () => getCalculatorValue("*");
 (document.getElementById("btn-/") as HTMLElement).onclick = () => getCalculatorValue("/");
 
-(document.getElementById("btn-AC") as HTMLElement).onclick = () => clearDisplay();
-(document.getElementById("btn-=") as HTMLElement).onclick = () => calculateValue();
+(document.getElementById("btn-AC") as HTMLElement).onclick = () => resetCalculator();
+(document.getElementById("btn-=") as HTMLElement).onclick = () => calculate();
