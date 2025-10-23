@@ -7,7 +7,15 @@ function ActivateCalculator() {
     function getCalculatorValue(value) {
         equationCharacters.push(value);
         if (value === "+" || value === "-" || value === "*" || value === "/" || value === ".") {
-            if (equationCharacters.at(-2) === "+" || equationCharacters.at(-2) === "-" || equationCharacters.at(-2) === "*" || equationCharacters.at(-2) === "/" || equationCharacters.at(-2) === ".") {
+            if (equationCharacters.at(-2) === "+" ||
+                equationCharacters.at(-2) === "-" ||
+                equationCharacters.at(-2) === "*" ||
+                equationCharacters.at(-2) === "/" ||
+                equationCharacters.at(-2) === "." ||
+                equationCharacters[0] === "+" ||
+                equationCharacters[0] === "*" ||
+                equationCharacters[0] === "/" ||
+                equationCharacters[0] === ".") {
                 equationCharacters.pop();
                 return;
             }
