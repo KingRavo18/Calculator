@@ -7,6 +7,7 @@
     height: 40px;
     font-family: monospace;
     font-size: 200%;
+    box-shadow: 2px 2px 2px #313131;
     font-weight: bold;
     -webkit-text-stroke: 1px #949393;
 

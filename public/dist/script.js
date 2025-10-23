@@ -30,9 +30,10 @@ function ActivateCalculator() {
         }
         let finalNumber = solveEquation();
         if (finalNumber === Infinity) {
-            return getError();
+            resetCalculator();
+            return equationDisplay.value = "ERROR";
         }
-        displayedEquation = (finalNumber).toString();
+        displayedEquation = (parseFloat(finalNumber.toFixed(5))).toString();
         equationDisplay.value = displayedEquation;
         equationCharacters.length = 0;
         equationCharacters.push(displayedEquation);
@@ -74,9 +75,6 @@ function ActivateCalculator() {
                 if (condensedEquation[j - 1] === "/")
                     finalNumber /= condensedEquation[j];
             }
-            else {
-                continue;
-            }
         }
         return finalNumber;
     }
@@ -86,10 +84,6 @@ function ActivateCalculator() {
         tempArray.length = 0;
         displayedEquation = "";
         equationDisplay.value = displayedEquation;
-    }
-    function getError() {
-        resetCalculator();
-        equationDisplay.value = "ERROR";
     }
     return { getCalculatorValue, resetCalculator, calculate };
 }

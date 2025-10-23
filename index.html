@@ -9,27 +9,27 @@
 </head>
 <body class="flex justify-center items-center h-screen">
     <div class="flex flex-col items-center bg-[#3A3A3A] w-[590px] has-auto rounded-[30px] shadow-[4px_4px_15px_#6e6e6e]">
-        <input id="equation-display" readonly class="bg-[#848F5D] my-[30px] pointer-events-none inset-shadow-[0_5px_5px_#68704b] w-[85%] h-[80px] px-[10px] text-right text-[300%] text-[#4b5234]">
+        <input id="equation-display" readonly class="bg-[#848F5D] my-[30px] pointer-events-none inset-shadow-[0_5px_5px_#68704b] w-[85%] h-20 px-2.5 text-right text-[300%] text-[#4b5234] font-[monospace]">
         <div class="flex flex-wrap w-[85%] gap-[15px] justify-center">
-            <button id="btn-1" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]">1</button>
-            <button id="btn-2" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]">2</button>
-            <button id="btn-3" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]">3</button>
-            <button id="btn-AC" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]">AC</button>
-            <button id="btn-4" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]">4</button>
-            <button id="btn-5" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]">5</button>
-            <button id="btn-6" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]">6</button>
-            <button id="btn-+" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]">+</button>
-            <button id="btn-7" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]">7</button>
-            <button id="btn-8" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]">8</button>
-            <button id="btn-9" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]">9</button>
-            <button id="btn-*" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]">*</button>
-            <button id="btn-0" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]">0</button>
-            <button id="btn-." class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]">.</button>
-            <button id="btn--" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]">-</button>
-            <button id="btn-/" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]">/</button>
+            <button id="btn-1" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]" title="Select 1">1</button>
+            <button id="btn-2" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]" title="Select 2">2</button>
+            <button id="btn-3" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]" title="Select 3">3</button>
+            <button id="btn-AC" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]" title="Clear display">AC</button>
+            <button id="btn-4" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]" title="Select 4">4</button>
+            <button id="btn-5" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]" title="Select 5">5</button>
+            <button id="btn-6" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]" title="Select 6">6</button>
+            <button id="btn-+" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]" title="Add">+</button>
+            <button id="btn-7" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]" title="Select 7">7</button>
+            <button id="btn-8" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]" title="Select 8">8</button>
+            <button id="btn-9" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]" title="Select 9">9</button>
+            <button id="btn-*" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]" title="Multiply">*</button>
+            <button id="btn-0" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]" title="Select 0">0</button>
+            <button id="btn-." class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]" title="Use .">.</button>
+            <button id="btn--" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]" title="Subtract">-</button>
+            <button id="btn-/" class="calculator-btn bg-[#A1A1A1] hover:bg-[#8b8b8b] active:bg-[#5e5d5d]" title="Divide">/</button>
         </div>
-        <div class="my-[15px] w-[85%] px-[8px]">
-            <button id="btn-=" class="calculator-btn bg-[#C27C7C] hover:bg-[#9c6161] active:bg-[#744848] float-right">=</button>
+        <div class="my-[15px] w-[85%] px-2">
+            <button id="btn-=" class="calculator-btn bg-[#C27C7C] hover:bg-[#9c6161] active:bg-[#744848] float-right" title="Calculate">=</button>
         </div>
     </div>
     <script type="module" src="./public/dist/script.js"></script>

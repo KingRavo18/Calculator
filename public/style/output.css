@@ -7,6 +7,7 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --spacing: 0.25rem;
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
   }
@@ -180,8 +181,8 @@
   .table {
     display: table;
   }
-  .h-\[80px\] {
-    height: 80px;
+  .h-20 {
+    height: calc(var(--spacing) * 20);
   }
   .h-screen {
     height: 100vh;
@@ -213,15 +214,6 @@
   .gap-\[15px\] {
     gap: 15px;
   }
-  .overflow-auto {
-    overflow: auto;
-  }
-  .overflow-hidden {
-    overflow: hidden;
-  }
-  .overflow-scroll {
-    overflow: scroll;
-  }
   .rounded-\[30px\] {
     border-radius: 30px;
   }
@@ -241,17 +233,17 @@
   .bg-\[\#C27C7C\] {
     background-color: #C27C7C;
   }
-  .px-\[8px\] {
-    padding-inline: 8px;
+  .px-2 {
+    padding-inline: calc(var(--spacing) * 2);
   }
-  .px-\[9px\] {
-    padding-inline: 9px;
-  }
-  .px-\[10px\] {
-    padding-inline: 10px;
+  .px-2\.5 {
+    padding-inline: calc(var(--spacing) * 2.5);
   }
   .text-right {
     text-align: right;
+  }
+  .font-\[monospace\] {
+    font-family: monospace;
   }
   .text-\[300\%\] {
     font-size: 300%;
@@ -273,9 +265,6 @@
   .outline {
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
-  }
-  .\[direction\:rtl\] {
-    direction: rtl;
   }
   .hover\:bg-\[\#8b8b8b\] {
     &:hover {
@@ -309,6 +298,7 @@
   height: 40px;
   font-family: monospace;
   font-size: 200%;
+  box-shadow: 2px 2px 2px #313131;
   font-weight: bold;
   -webkit-text-stroke: 1px #949393;
   &:hover {
