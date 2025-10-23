@@ -50,6 +50,9 @@ function calculateValue() {
             }
         }
     }
+    if (finalNumber === Infinity) {
+        return getError();
+    }
     visibleEquation = (finalNumber).toString();
     equationDisplay.value = visibleEquation;
 }

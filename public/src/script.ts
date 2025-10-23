@@ -51,7 +51,9 @@ function calculateValue(): void{
             }
         }
     }
-
+    if(finalNumber === Infinity){
+        return getError();
+    }
     visibleEquation = (finalNumber).toString();
     equationDisplay.value = visibleEquation; 
 }
