@@ -44,7 +44,7 @@ function ActivateCalculator() {
             if (char === undefined) {
                 continue;
             }
-            if (Number(char) || char === ".") {
+            if (!isNaN(Number(char)) || char === ".") {
                 tempArray.push(char);
                 if (i === equationCharacters.length - 1) {
                     condensedEquation.push(Number(tempArray.join("")));
@@ -64,7 +64,7 @@ function ActivateCalculator() {
             if (j === 0) {
                 finalNumber = condensedEquation[j];
             }
-            else if (Number.isInteger(condensedEquation[j])) {
+            else if (!isNaN(Number(condensedEquation[j]))) {
                 if (condensedEquation[j - 1] === "+")
                     finalNumber += condensedEquation[j];
                 if (condensedEquation[j - 1] === "*")

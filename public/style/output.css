@@ -213,6 +213,15 @@
   .gap-\[15px\] {
     gap: 15px;
   }
+  .overflow-auto {
+    overflow: auto;
+  }
+  .overflow-hidden {
+    overflow: hidden;
+  }
+  .overflow-scroll {
+    overflow: scroll;
+  }
   .rounded-\[30px\] {
     border-radius: 30px;
   }
@@ -264,6 +273,9 @@
   .outline {
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
+  }
+  .\[direction\:rtl\] {
+    direction: rtl;
   }
   .hover\:bg-\[\#8b8b8b\] {
     &:hover {

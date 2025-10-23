@@ -10,7 +10,7 @@ function ActivateCalculator(): calculatorReturnTypes{
     const tempArray: string[] = [];
     const condensedEquation: any[] = [];
     let displayedEquation = "";
-
+    
     function getCalculatorValue(value: string){
         equationCharacters.push(value);
         if(value === "+" || value === "-" || value === "*" || value === "/" || value === "."){
@@ -54,7 +54,7 @@ function ActivateCalculator(): calculatorReturnTypes{
             if(char === undefined){
                 continue;
             }
-            if(Number(char) || char === "."){
+            if(!isNaN(Number(char)) || char === "."){
                 tempArray.push(char);
                 if(i === equationCharacters.length - 1){
                     condensedEquation.push(Number(tempArray.join("")));
@@ -73,7 +73,7 @@ function ActivateCalculator(): calculatorReturnTypes{
         for(let j = 0; j < condensedEquation.length; j++){
             if(j === 0){
                 finalNumber = condensedEquation[j];
-            }else if(Number.isInteger(condensedEquation[j])){
+            }else if(!isNaN(Number(condensedEquation[j]))){
                 if(condensedEquation[j - 1] === "+") finalNumber += condensedEquation[j];
                 if(condensedEquation[j - 1] === "*") finalNumber *= condensedEquation[j];
                 if(condensedEquation[j - 1] === "-") finalNumber -= condensedEquation[j];
