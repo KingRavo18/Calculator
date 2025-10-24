@@ -6,30 +6,21 @@ interface calculatorReturnTypes {
 
 function ActivateCalculator(): calculatorReturnTypes{
     const equationDisplay = document.getElementById("equation-display") as HTMLInputElement;
-    const equationCharacters: string[] = [];
+    const equationCharacters: string[] = [" "];
     const tempArray: string[] = [];
     const condensedEquation: any[] = [];
-    let displayedEquation = "";
 
     function getCalculatorValue(value: string){
         equationCharacters.push(value);
-        if(value === "+" || value === "-" || value === "*" || value === "/" || value === "."){
-            if(equationCharacters.at(-2) === "+" || 
-               equationCharacters.at(-2) === "-" || 
-               equationCharacters.at(-2) === "*" || 
-               equationCharacters.at(-2) === "/" || 
-               equationCharacters.at(-2) === "." || 
-               equationCharacters[0] === "+" || 
-               equationCharacters[0] === "*" || 
-               equationCharacters[0] === "/" || 
-               equationCharacters[0] === "."
-            ){
-                equationCharacters.pop();
-                return;
-            }
+        const firstValue = equationCharacters[1];
+        const secondToLastValue = equationCharacters.at(-2);
+        if(firstValue === undefined || secondToLastValue === undefined){
+            return;
         }
-        displayedEquation = equationCharacters.join("");
-        equationDisplay.value = displayedEquation; 
+        if("+*/.".includes(firstValue) || ("+-*/.".includes(value) && "+-*/.".includes(secondToLastValue))){
+            return equationCharacters.pop();
+        }
+        equationDisplay.value = equationCharacters.join(""); 
     }
 
     function calculate(){
@@ -42,19 +33,17 @@ function ActivateCalculator(): calculatorReturnTypes{
             resetCalculator();
             return equationDisplay.value = "ERROR";
         }
-        displayedEquation = (parseFloat(finalNumber.toFixed(5))).toString();
-        equationDisplay.value = displayedEquation; 
-        equationCharacters.length = 0;
-        equationCharacters.push(displayedEquation);
+        const result = (parseFloat(finalNumber.toFixed(5))).toString();
+        equationDisplay.value = result; 
+        equationCharacters.length = 1;
+        equationCharacters.push(result);
     }
 
     function createEquation(): void{
         condensedEquation.length = 0;
         for(let i = 0; i < equationCharacters.length; i++){
             const char = equationCharacters[i];
-            if(char === undefined){
-                continue;
-            }
+            if(char === undefined) continue;
             if(!isNaN(Number(char)) || char === "."){
                 tempArray.push(char);
                 if(i === equationCharacters.length - 1){
@@ -65,6 +54,14 @@ function ActivateCalculator(): calculatorReturnTypes{
                 condensedEquation.push(Number(tempArray.join("")));
                 tempArray.length = 0;
                 condensedEquation.push(char);
+            }
+        }
+        // Sorts the equation so dividing and multiplying happen before addition and subtraction
+        for(let i = 0; i < condensedEquation.length; i++){
+            if("*/".includes(condensedEquation[i]) && "+-".includes(condensedEquation[i - 2])){
+                [condensedEquation[i - 1], condensedEquation[i - 3]] = [condensedEquation[i - 3], condensedEquation[i - 1]];
+                [condensedEquation[i], condensedEquation[i - 2]] = [condensedEquation[i - 2], condensedEquation[i]];
+                [condensedEquation[i + 1], condensedEquation[i - 1]] = [condensedEquation[i - 1], condensedEquation[i + 1]];
             }
         }
     }
@@ -85,11 +82,10 @@ function ActivateCalculator(): calculatorReturnTypes{
     }
 
     function resetCalculator(){
-        equationCharacters.length = 0;
+        equationCharacters.length = 1;
         condensedEquation.length = 0;
         tempArray.length = 0;
-        displayedEquation = "";
-        equationDisplay.value = displayedEquation;
+        equationDisplay.value = "";
     }
 
     return {getCalculatorValue, resetCalculator, calculate}
