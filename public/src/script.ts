@@ -18,7 +18,7 @@ function CalculatorGenerator(): calculatorReturnTypes{
             return equationCharacters.pop();
         }
         // This check stops the first (except -) and last values from being arithmetic operators
-        if("+*/.".includes(firstValue) || ("+*/.".includes(value) && "+-*/.".includes(secondToLastValue))){
+        if("+x÷.".includes(firstValue) || ("+x÷.".includes(value) && "+-x÷.".includes(secondToLastValue))){
             return equationCharacters.pop();
         } 
         equationDisplay.value = equationCharacters.join(""); 
@@ -55,7 +55,7 @@ function CalculatorGenerator(): calculatorReturnTypes{
             if(i === 1 && char === "-"){
                 tempArray.push(char);
             }
-            else if("+*/".includes(char) || (char === "-" && !"+-*/".includes(previousChar))){
+            else if("+x÷".includes(char) || (char === "-" && !"+-x÷".includes(previousChar))){
                 condensedEquation.push(Number(tempArray.join("")));
                 tempArray.length = 0;
                 condensedEquation.push(char);
@@ -72,14 +72,14 @@ function CalculatorGenerator(): calculatorReturnTypes{
 
     function solveEquation(): number{
         let finalNumber = 0;
-        while(condensedEquation.includes("/") || condensedEquation.includes("*")){
-            for(let i = 1; i < condensedEquation.length; i++){
+        while(condensedEquation.includes("÷") || condensedEquation.includes("x")){
+            for(let i = 1; i < condensedEquation.length - 1; i++){
                 console.log(condensedEquation);
-                if(condensedEquation[i] === "*"){
+                if(condensedEquation[i] === "x"){
                     condensedEquation.splice(i - 1, 3, Number(condensedEquation[i - 1] * condensedEquation[i + 1]));
                     break;
                 } 
-                else if(condensedEquation[i] === "/"){
+                else if(condensedEquation[i] === "÷"){
                     condensedEquation.splice(i - 1, 3, Number(condensedEquation[i - 1] / condensedEquation[i + 1]));
                     break;
                 }
@@ -87,7 +87,7 @@ function CalculatorGenerator(): calculatorReturnTypes{
         }
         while(condensedEquation.includes("-") || condensedEquation.includes("+")){
             finalNumber = condensedEquation[0];
-            for(let j = 1; j < condensedEquation.length; j++){
+            for(let j = 1; j < condensedEquation.length - 1; j++){
                 console.log(condensedEquation);
                 if(condensedEquation[j] === "+"){
                     condensedEquation.splice(j - 1, 3, Number(condensedEquation[j - 1] + condensedEquation[j + 1]));
@@ -129,8 +129,8 @@ const {getCalculatorValue, resetCalculator, calculate} = CalculatorGenerator();
 
 (document.getElementById("btn-+") as HTMLElement).onclick = () => getCalculatorValue("+");
 (document.getElementById("btn--") as HTMLElement).onclick = () => getCalculatorValue("-");
-(document.getElementById("btn-*") as HTMLElement).onclick = () => getCalculatorValue("*");
-(document.getElementById("btn-/") as HTMLElement).onclick = () => getCalculatorValue("/");
+(document.getElementById("btn-x") as HTMLElement).onclick = () => getCalculatorValue("x");
+(document.getElementById("btn-÷") as HTMLElement).onclick = () => getCalculatorValue("÷");
 
 (document.getElementById("btn-AC") as HTMLElement).onclick = () => resetCalculator();
 (document.getElementById("btn-=") as HTMLElement).onclick = () => calculate();
