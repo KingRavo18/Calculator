@@ -59,33 +59,37 @@ function ActivateCalculator() {
                 }
             }
         }
-        // The loop sorts the condensedEquation array so dividing and multiplying happen before addition and subtraction
-        for (let i = 0; i < condensedEquation.length; i++) {
-            if ("*/".includes(condensedEquation[i]) && "+-".includes(condensedEquation[i - 2])) {
-                [condensedEquation[i - 1], condensedEquation[i - 3]] = [condensedEquation[i - 3], condensedEquation[i - 1]];
-                [condensedEquation[i], condensedEquation[i - 2]] = [condensedEquation[i - 2], condensedEquation[i]];
-                [condensedEquation[i + 1], condensedEquation[i - 1]] = [condensedEquation[i - 1], condensedEquation[i + 1]];
-            }
-        }
     }
     function solveEquation() {
         let finalNumber = 0;
-        // The loop condenses the condensedEquation array into a single final result
-        for (let j = 0; j < condensedEquation.length; j++) {
-            if (j === 0) {
-                finalNumber = condensedEquation[j];
-            }
-            else if (!isNaN(Number(condensedEquation[j]))) {
-                if (condensedEquation[j - 1] === "+")
-                    finalNumber += condensedEquation[j];
-                if (condensedEquation[j - 1] === "*")
-                    finalNumber *= condensedEquation[j];
-                if (condensedEquation[j - 1] === "-")
-                    finalNumber -= condensedEquation[j];
-                if (condensedEquation[j - 1] === "/")
-                    finalNumber /= condensedEquation[j];
+        while (condensedEquation.includes("/") || condensedEquation.includes("*")) {
+            for (let i = 1; i < condensedEquation.length; i++) {
+                console.log(condensedEquation);
+                if (condensedEquation[i] === "*") {
+                    condensedEquation.splice(i - 1, 3, Number(condensedEquation[i - 1] * condensedEquation[i + 1]));
+                    break;
+                }
+                else if (condensedEquation[i] === "/") {
+                    condensedEquation.splice(i - 1, 3, Number(condensedEquation[i - 1] / condensedEquation[i + 1]));
+                    break;
+                }
             }
         }
+        while (condensedEquation.includes("-") || condensedEquation.includes("+")) {
+            finalNumber = condensedEquation[0];
+            for (let j = 1; j < condensedEquation.length; j++) {
+                console.log(condensedEquation);
+                if (condensedEquation[j] === "+") {
+                    condensedEquation.splice(j - 1, 3, Number(condensedEquation[j - 1] + condensedEquation[j + 1]));
+                    break;
+                }
+                else if (condensedEquation[j] === "-") {
+                    condensedEquation.splice(j - 1, 3, Number(condensedEquation[j - 1] - condensedEquation[j + 1]));
+                    break;
+                }
+            }
+        }
+        finalNumber = condensedEquation[0];
         return finalNumber;
     }
     function resetCalculator() {
