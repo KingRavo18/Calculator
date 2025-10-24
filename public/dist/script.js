@@ -8,17 +8,20 @@ function ActivateCalculator() {
         const firstValue = equationCharacters[1];
         const secondToLastValue = equationCharacters.at(-2);
         if (firstValue === undefined || secondToLastValue === undefined) {
-            return;
+            return equationCharacters.pop();
         }
-        if ("+*/.".includes(firstValue) || ("+-*/.".includes(value) && "+-*/.".includes(secondToLastValue))) {
+        // This check stops the first (except -) and last values from being arithmetic operators
+        if ("+*/.".includes(firstValue) || ("+*/.".includes(value) && "+-*/.".includes(secondToLastValue))) {
             return equationCharacters.pop();
         }
         equationDisplay.value = equationCharacters.join("");
     }
     function calculate() {
         createEquation();
+        // This check checks if an equation has at least 2 numbers and an arithmetic operation before executing the next steps
         if (condensedEquation.length < 3) {
-            return;
+            resetCalculator();
+            return equationDisplay.value = "ERROR";
         }
         let finalNumber = solveEquation();
         if (finalNumber === Infinity) {
@@ -32,24 +35,31 @@ function ActivateCalculator() {
     }
     function createEquation() {
         condensedEquation.length = 0;
-        for (let i = 0; i < equationCharacters.length; i++) {
+        // The loop condenses every value of the equationCharacters array into numbers and arithmetic operations that are pushed into
+        // the condensedEquation array
+        for (let i = 1; i < equationCharacters.length; i++) {
             const char = equationCharacters[i];
-            if (char === undefined)
+            const previousChar = equationCharacters[i - 1];
+            if (char === undefined || previousChar === undefined) {
                 continue;
-            if (!isNaN(Number(char)) || char === ".") {
+            }
+            if (i === 1 && char === "-") {
+                tempArray.push(char);
+            }
+            else if ("+*/".includes(char) || (char === "-" && !"+-*/".includes(previousChar))) {
+                condensedEquation.push(Number(tempArray.join("")));
+                tempArray.length = 0;
+                condensedEquation.push(char);
+            }
+            else {
                 tempArray.push(char);
                 if (i === equationCharacters.length - 1) {
                     condensedEquation.push(Number(tempArray.join("")));
                     tempArray.length = 0;
                 }
             }
-            else {
-                condensedEquation.push(Number(tempArray.join("")));
-                tempArray.length = 0;
-                condensedEquation.push(char);
-            }
         }
-        // Sorts the equation so dividing and multiplying happen before addition and subtraction
+        // The loop sorts the condensedEquation array so dividing and multiplying happen before addition and subtraction
         for (let i = 0; i < condensedEquation.length; i++) {
             if ("*/".includes(condensedEquation[i]) && "+-".includes(condensedEquation[i - 2])) {
                 [condensedEquation[i - 1], condensedEquation[i - 3]] = [condensedEquation[i - 3], condensedEquation[i - 1]];
@@ -60,6 +70,7 @@ function ActivateCalculator() {
     }
     function solveEquation() {
         let finalNumber = 0;
+        // The loop condenses the condensedEquation array into a single final result
         for (let j = 0; j < condensedEquation.length; j++) {
             if (j === 0) {
                 finalNumber = condensedEquation[j];
