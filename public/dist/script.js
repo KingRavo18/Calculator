@@ -1,4 +1,4 @@
-function ActivateCalculator() {
+function CalculatorGenerator() {
     const equationDisplay = document.getElementById("equation-display");
     const equationCharacters = [" "];
     const tempArray = [];
@@ -100,7 +100,7 @@ function ActivateCalculator() {
     }
     return { getCalculatorValue, resetCalculator, calculate };
 }
-const { getCalculatorValue, resetCalculator, calculate } = ActivateCalculator();
+const { getCalculatorValue, resetCalculator, calculate } = CalculatorGenerator();
 document.getElementById("btn-1").onclick = () => getCalculatorValue("1");
 document.getElementById("btn-2").onclick = () => getCalculatorValue("2");
 document.getElementById("btn-3").onclick = () => getCalculatorValue("3");

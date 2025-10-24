@@ -4,7 +4,7 @@ interface calculatorReturnTypes {
     resetCalculator: () => void;
 }
 
-function ActivateCalculator(): calculatorReturnTypes{
+function CalculatorGenerator(): calculatorReturnTypes{
     const equationDisplay = document.getElementById("equation-display") as HTMLInputElement;
     const equationCharacters: string[] = [" "];
     const tempArray: string[] = [];
@@ -113,7 +113,7 @@ function ActivateCalculator(): calculatorReturnTypes{
     return {getCalculatorValue, resetCalculator, calculate}
 }
 
-const {getCalculatorValue, resetCalculator, calculate} = ActivateCalculator();
+const {getCalculatorValue, resetCalculator, calculate} = CalculatorGenerator();
 
 (document.getElementById("btn-1") as HTMLElement).onclick = () => getCalculatorValue("1");
 (document.getElementById("btn-2") as HTMLElement).onclick = () => getCalculatorValue("2");
