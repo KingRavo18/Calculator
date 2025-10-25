@@ -11,7 +11,7 @@ function CalculatorGenerator() {
             return equationCharacters.pop();
         }
         // This check stops the first (except -) and last values from being arithmetic operators
-        if ("+x÷.".includes(firstValue) || ("+x÷.".includes(value) && "+-x÷.".includes(secondToLastValue))) {
+        if ("+×÷.".includes(firstValue) || ("+×÷.".includes(value) && "+-×÷.".includes(secondToLastValue))) {
             return equationCharacters.pop();
         }
         equationDisplay.value = equationCharacters.join("");
@@ -46,7 +46,7 @@ function CalculatorGenerator() {
             if (i === 1 && char === "-") {
                 tempArray.push(char);
             }
-            else if ("+x÷".includes(char) || (char === "-" && !"+-x÷".includes(previousChar))) {
+            else if ("+×÷".includes(char) || (char === "-" && !"+-×÷".includes(previousChar))) {
                 condensedEquation.push(Number(tempArray.join("")));
                 tempArray.length = 0;
                 condensedEquation.push(char);
@@ -60,37 +60,29 @@ function CalculatorGenerator() {
             }
         }
     }
+    // This function splices the condensedEquation array until there is only one last value, which is the answer
     function solveEquation() {
-        let finalNumber = 0;
-        while (condensedEquation.includes("÷") || condensedEquation.includes("x")) {
+        while (condensedEquation.includes("÷") || condensedEquation.includes("×")) {
             for (let i = 1; i < condensedEquation.length - 1; i++) {
-                console.log(condensedEquation);
-                if (condensedEquation[i] === "x") {
-                    condensedEquation.splice(i - 1, 3, Number(condensedEquation[i - 1] * condensedEquation[i + 1]));
-                    break;
-                }
-                else if (condensedEquation[i] === "÷") {
-                    condensedEquation.splice(i - 1, 3, Number(condensedEquation[i - 1] / condensedEquation[i + 1]));
+                const beforeOperator = Number(condensedEquation[i - 1]);
+                const afterOperator = Number(condensedEquation[i + 1]);
+                if (condensedEquation[i] === "×" || condensedEquation[i] === "÷") {
+                    condensedEquation.splice(i - 1, 3, condensedEquation[i] === "×" ? beforeOperator * afterOperator : beforeOperator / afterOperator);
                     break;
                 }
             }
         }
         while (condensedEquation.includes("-") || condensedEquation.includes("+")) {
-            finalNumber = condensedEquation[0];
             for (let j = 1; j < condensedEquation.length - 1; j++) {
-                console.log(condensedEquation);
-                if (condensedEquation[j] === "+") {
-                    condensedEquation.splice(j - 1, 3, Number(condensedEquation[j - 1] + condensedEquation[j + 1]));
-                    break;
-                }
-                else if (condensedEquation[j] === "-") {
-                    condensedEquation.splice(j - 1, 3, Number(condensedEquation[j - 1] - condensedEquation[j + 1]));
+                const beforeOperator = Number(condensedEquation[j - 1]);
+                const afterOperator = Number(condensedEquation[j + 1]);
+                if (condensedEquation[j] === "+" || condensedEquation[j] === "-") {
+                    condensedEquation.splice(j - 1, 3, condensedEquation[j] === "+" ? beforeOperator + afterOperator : beforeOperator - afterOperator);
                     break;
                 }
             }
         }
-        finalNumber = condensedEquation[0];
-        return finalNumber;
+        return Number(condensedEquation[0]);
     }
     function resetCalculator() {
         equationCharacters.length = 1;
@@ -114,7 +106,7 @@ document.getElementById("btn-0").onclick = () => getCalculatorValue("0");
 document.getElementById("btn-.").onclick = () => getCalculatorValue(".");
 document.getElementById("btn-+").onclick = () => getCalculatorValue("+");
 document.getElementById("btn--").onclick = () => getCalculatorValue("-");
-document.getElementById("btn-x").onclick = () => getCalculatorValue("x");
+document.getElementById("btn-×").onclick = () => getCalculatorValue("×");
 document.getElementById("btn-÷").onclick = () => getCalculatorValue("÷");
 document.getElementById("btn-AC").onclick = () => resetCalculator();
 document.getElementById("btn-=").onclick = () => calculate();
