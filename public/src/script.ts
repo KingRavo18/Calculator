@@ -6,6 +6,7 @@ interface calculatorReturnTypes {
 
 function CalculatorGenerator(): calculatorReturnTypes{
     const equationDisplay = document.getElementById("equation-display") as HTMLInputElement;
+    const prevEquationDisplay = document.getElementById("prev-equation-display") as HTMLElement;
     const equationCharacters: string[] = [" "];
     const tempArray: string[] = [];
     const condensedEquation: (string | number)[] = [];
@@ -38,6 +39,7 @@ function CalculatorGenerator(): calculatorReturnTypes{
         }
         const result = (parseFloat(finalNumber.toFixed(5))).toString();
         equationDisplay.value = result; 
+        prevEquationDisplay.textContent = equationCharacters.join("");
         equationCharacters.length = 1;
         equationCharacters.push(result);
     }
@@ -99,6 +101,7 @@ function CalculatorGenerator(): calculatorReturnTypes{
         equationCharacters.length = 1;
         condensedEquation.length = 0;
         tempArray.length = 0;
+        prevEquationDisplay.textContent = "";
         equationDisplay.value = "";
     }
 

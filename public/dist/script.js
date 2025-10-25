@@ -1,5 +1,6 @@
 function CalculatorGenerator() {
     const equationDisplay = document.getElementById("equation-display");
+    const prevEquationDisplay = document.getElementById("prev-equation-display");
     const equationCharacters = [" "];
     const tempArray = [];
     const condensedEquation = [];
@@ -30,6 +31,7 @@ function CalculatorGenerator() {
         }
         const result = (parseFloat(finalNumber.toFixed(5))).toString();
         equationDisplay.value = result;
+        prevEquationDisplay.textContent = equationCharacters.join("");
         equationCharacters.length = 1;
         equationCharacters.push(result);
     }
@@ -88,6 +90,7 @@ function CalculatorGenerator() {
         equationCharacters.length = 1;
         condensedEquation.length = 0;
         tempArray.length = 0;
+        prevEquationDisplay.textContent = "";
         equationDisplay.value = "";
     }
     return { getCalculatorValue, resetCalculator, calculate };
